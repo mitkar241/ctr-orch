@@ -1,0 +1,29 @@
+[
+  {
+    "hostname": "controller.mitkar.io",
+    "ip": "192.168.0.6",
+    "osflavour": "ubuntu_desktop",
+    "disksize": "65GB",
+    "ram": 4096,
+    "vram": 128,
+    "cpu": 2
+  },
+  {
+    "hostname": "backend-01.mitkar.io",
+    "ip": "192.168.0.7",
+    "osflavour": "ubuntu_server",
+    "disksize": "65GB",
+    "ram": 2048,
+    "vram": 128,
+    "cpu": 2
+  },
+  {
+    "hostname": "backend-02.mitkar.io",
+    "ip": "192.168.0.8",
+    "osflavour": "ubuntu_server",
+    "disksize": "65GB",
+    "ram": 2048,
+    "vram": 128,
+    "cpu": 2
+  }
+]
