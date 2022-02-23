@@ -73,20 +73,19 @@ function argparse {
   echo "$kind:$hostname:$docker_version:$k8s_version"
 }
 
-# set hostname
-function setHostname() {
-  hostname=$1
-  hostnamectl set-hostname $hostname
-}
-
-# for testing
 function disableFirewall() {
   ufw disable
+  #Firewall stopped and disabled on system startup
 }
 
 # off swap
 function disableSwap() {
-  swapoff -a; sed -i '/swap/d' /etc/fstab
+  swapoff -a
+  cat /etc/fstab | grep "swap" | wc -l
+  #1
+  sed -i '/swap/d' /etc/fstab
+  cat /etc/fstab | grep "swap" | wc -l
+  #0
 }
 
 # Update sysctl settings for Kubernetes networking
@@ -95,7 +94,13 @@ function updateSysctl() {
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
+  cat /etc/sysctl.d/kubernetes.conf
+  #net.bridge.bridge-nf-call-ip6tables = 1
+  #net.bridge.bridge-nf-call-iptables = 1
   sysctl --system
+  sysctl --system | grep -i "/etc/sysctl.d/kubernetes.conf" | wc -l
+  #sysctl: setting key "net.ipv4.conf.all.promote_secondaries": Invalid argument
+  #1
 }
 
 # Install docker engine
@@ -106,11 +111,10 @@ function installDocker() {
   fi
   apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+  #OK
   add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
   apt update
-  apt install -y docker-ce$version containerd.io
-  groupadd docker
-  usermod -aG docker $USER
+  apt install -y docker-ce=5:19.03.10~3-0~ubuntu-focal containerd.io
 }
 
 # Install Kubernetes components
@@ -120,13 +124,28 @@ function installK8s() {
     version="="$version
   fi
   curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+  #OK
   echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
-  apt update && apt install -y kubeadm$version kubelet$version kubectl$version
+  cat /etc/apt/sources.list.d/kubernetes.list | grep "kubernetes-xenial" | wc -l
+  #1
+  apt update && apt install -y kubeadm=1.18.5-00 kubelet=1.18.5-00 kubectl=1.18.5-00
+}
+
+function modKmsg() {
+  mknod /dev/kmsg c 1 11
+  echo '#!/bin/sh -e' >> /etc/rc.local
+  echo 'mknod /dev/kmsg c 1 11' >> /etc/rc.local
+  chmod +x /etc/rc.local
+  cat /etc/rc.local
+  ##!/bin/sh -e
+  #mknod /dev/kmsg c 1 11
 }
 
 # Initialize Kubernetes Cluster
 function initK8sCluster() {
-  mgmtip=$(hostname -I | cut -d' ' -f1-1)
+  hostname=$1
+  mgmtip=$(nslookup $hostname | grep -i "address" | tail -1| cut -d' ' -f2)
+  kubeadm config images pull
   kubeadm init --apiserver-advertise-address=$mgmtip --pod-network-cidr=192.168.0.0/16  --ignore-preflight-errors=all
 }
 
@@ -138,6 +157,10 @@ function deployCalico() {
 # To be able to run kubectl commands as non-root user
 # NOTE: not functioning well as non-sudo
 function nonSudoCompatiability() {
+  # docker access
+  groupadd docker
+  usermod -aG docker $USER
+  # kubelet access
   mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -146,7 +169,8 @@ function nonSudoCompatiability() {
 # Cluster join command
 # NOTE: Note the Output Command
 function getClusterToken() {
-  kubeadm token create --print-join-command
+  kubeadm token create --print-join-command 2>/dev/null
+  #kubeadm join 192.168.0.6:6443 --token xx.xxxx     --discovery-token-ca-cert-hash sha256:abc123
 }
 
 function main() {
@@ -167,14 +191,15 @@ function main() {
   IFS=$' \t\n'
   #validateVersion
   
-  setHostname ${hostname}
   disableFirewall
+  disableSwap
   updateSysctl
   installDocker ${docker_version}
   installK8s ${k8s_version}
 
   if [[ $kind == "master" ]]; then
-    initK8sCluster
+    modKmsg
+    initK8sCluster ${hostname}
     deployCalico
     nonSudoCompatiability
     getClusterToken
