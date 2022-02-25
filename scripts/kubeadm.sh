@@ -1,16 +1,22 @@
-#!/bin/bash
+#!/bin/env sh
 
 <<DESC
 @ FileName   : kubeadm.sh
 @ Description: Installation of multi-node kubeadm
 @ Usage      : chmod +x kubeadm.sh
   - master:
-    - sudo ./kubeadm.sh --kind=master --hostname=kmaster
+    - sudo ./kubeadm.sh --kind=master --hostname=kmaster.io
   - worker:
-    - sudo ./kubeadm.sh --kind=worker --hostname=kworker1
-    - final step:
-      - copy cluster token from master node
-      - sudo kubeadm join <host-ip>:6443 --token xyz321.abc123 --discovery-token-ca-cert-hash sha256:xxx
+    - sudo ./kubeadm.sh --kind=worker --hostname=kworker1.io
+  - user:
+    - sudo ./kubeadm.sh --user
+  - token:
+    - sudo ./kubeadm.sh --token
+  - set role:
+    - kubectl label nodes kworker1 kubernetes.io/role=worker
+  - final step:
+    - copy cluster token from master node
+    - sudo kubeadm join <host-ip>:6443 --token xyz321.abc123 --discovery-token-ca-cert-hash sha256:xxx
 DESC
 
 # usage function
@@ -26,6 +32,8 @@ optional arguments:
   -H, --hostname=HOSTNAME       provide hostname
   -d, --docker-version=VERSION  pass in a number
   -k, --k8s-version=VERSION     pass in a time string
+  -t, --token                   get kubeadm cluster token
+  -u, --user                    allow users to access kubelet without sudo
   -v, --verbose                 increase the verbosity of the bash script
   --dry-run                     do a dry run, dont change any files
 EOF
@@ -37,6 +45,8 @@ function argparse {
   local hostname=
   local docker_version=
   local k8s_version=
+  local ktoken="false"
+  local kuser="false"
   for i in "$@"; do
     case $i in
       -h|--help)
@@ -62,6 +72,14 @@ function argparse {
         k8s_version="${i#*=}"
         shift;
         ;;
+      -t|--token)
+        ktoken="true"
+        shift;
+        ;;
+      -u|--user)
+        kuser="true"
+        shift;
+        ;;
       -*|--*)
         echo "Unknown Option : $i"
         exit 1;
@@ -70,7 +88,7 @@ function argparse {
         ;;
     esac
   done
-  echo "$kind:$hostname:$docker_version:$k8s_version"
+  echo "$kind:$hostname:$docker_version:$k8s_version:$ktoken:$kuser"
 }
 
 function disableFirewall() {
@@ -183,26 +201,36 @@ function main() {
   local hostname
   local docker_version
   local k8s_version
+  local ktoken
+  local kuser
   
   # parse CLI arguments
   arglist=$(argparse $args)
-  IFS=":"
-  read kind hostname docker_version k8s_version<<<$arglist
+  IFS=':'
+  read kind hostname docker_version k8s_version ktoken kuser<<<$arglist
   IFS=$' \t\n'
   #validateVersion
   
-  disableFirewall
-  disableSwap
-  updateSysctl
-  installDocker ${docker_version}
-  installK8s ${k8s_version}
+  if [[ $kind == "master" || $kind == "worker" ]]; then
+    disableFirewall
+    disableSwap
+    updateSysctl
+    installDocker ${docker_version}
+    installK8s ${k8s_version}
+  fi
 
   if [[ $kind == "master" ]]; then
     modKmsg
     initK8sCluster ${hostname}
     deployCalico
-    nonSudoCompatiability
+  fi
+
+  if [[ $ktoken == "true" ]]; then
     getClusterToken
+  fi
+
+  if [[ $kuser == "true" ]]; then
+    nonSudoCompatiability
   fi
 }
 
