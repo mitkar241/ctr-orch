@@ -1,7 +1,8 @@
 # Kubernetes Networking
 ---
 
-- [ ] [Kubernetes Networking Guide for Beginners - matthewpalmer](https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-networking-guide-beginners.html)
+- [X] [Kubernetes Networking Guide for Beginners - matthewpalmer](https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-networking-guide-beginners.html)
+- [ ] [Kubernetes Networking Fundamentals - medium](https://medium.com/techbeatly/kubernetes-networking-fundamentals-d30baf8a28c8)
 
 ## Kubernetes Networking Guide for Beginners
 ---
