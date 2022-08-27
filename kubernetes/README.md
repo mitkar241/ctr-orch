@@ -2,6 +2,8 @@
 ---
 Repo for Kubernetes related Projects / Notes / Tutorials
 
+- [ ] [kelseyhightower/kubernetes-the-hard-way](https://github.com/kelseyhightower/kubernetes-the-hard-way)
+
 ### SetUp
 ---
 - [ ] Create SetUp using [Vagrant](https://github.com/mitkar241/vegaform)
