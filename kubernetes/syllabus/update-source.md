@@ -1,0 +1,59 @@
+- [ ] Installation
+  - [ ] Installing Kubernetes and Docker
+- [ ] Interacting with Kubernetes
+  - [ ] Kubernetes CLI
+  - [ ] Understanding kubectl commands
+- [ ] Docker and containers
+- [ ] Pods
+- [ ] Kubernetes System Overview
+  - [ ] Components
+  - [ ] Objects
+  - [ ] The apiVersion field
+- [ ] Pods in detail
+  - [ ] Overview
+  - [ ] Pod lifecycle
+  - [ ] Advanced configuration
+  - [ ] Custom command and arguments
+  - [ ] Environment variables
+  - [ ] Liveness and Readiness
+  - [ ] Security Contexts
+  - [ ] Multi-container pod design patterns
+  - [ ] Sidecar pattern
+  - [ ] Adapter pattern
+  - [ ] Ambassador pattern
+- [ ] Labels, selectors, annotations
+  - [ ] Namespaces
+  - [ ] Labels
+  - [ ] Selectors
+  - [ ] Annotations
+- [ ] Deployments
+  - [ ] Overview
+  - [ ] Deployment YAML
+  - [ ] Rolling updates and rolling back
+  - [ ] Scaling and autoscaling
+- [ ] Services
+  - [ ] Overview
+  - [ ] How is a request to a service routed through Kubernetes?
+- [ ] Deployments and Services Together
+- [ ] Storage
+  - [ ] Volumes
+  - [ ] Types of Volumes
+  - [ ] Persistent Volumes
+  - [ ] Persistent Volume Claims
+  - [ ] Lifecycle
+- [ ] Configuration
+  - [ ] ConfigMaps
+  - [ ] Secrets
+- [ ] Jobs
+  - [ ] Overview
+  - [ ] Jobs
+  - [ ] CronJobs
+- [ ] Resource Quotas
+- [ ] Service Accounts
+- [ ] Network Policies
+  - [ ] Networking Overview
+  - [ ] Network policies
+- [ ] Debugging, monitoring, and logging
+  - [ ] Debugging
+  - [ ] Monitoring
+  - [ ] Logging
