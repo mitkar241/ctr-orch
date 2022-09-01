@@ -1,0 +1,245 @@
+- [ ] **Introduction**
+  - [ ] Velocity
+    - [ ] The Value of Immutability
+    - [ ] Declarative Configuration
+    - [ ] Self-Healing Systems
+  - [ ] Scaling Your Service and Your Teams
+    - [ ] Decoupling
+    - [ ] Easy Scaling for Applications and Clusters
+    - [ ] Scaling Development Teams with Microservices
+    - [ ] Separation of Concerns for Consistency and Scaling
+  - [ ] Abstracting Your Infrastructure
+  - [ ] Efficiency
+- [ ] **Creating and Running Containers**
+  - [ ] Container Images
+    - [ ] The Docker Image Format
+  - [ ] Building Application Images with Docker
+    - [ ] Dockerfiles
+    - [ ] Optimizing Image Sizes
+    - [ ] Image Security
+  - [ ] Multistage Image Builds
+  - [ ] Storing Images in a Remote Registry
+  - [ ] The Docker Container Runtime
+    - [ ] Running Containers with Docker
+    - [ ] Exploring the kuard Application
+    - [ ] Limiting Resource Usage
+  - [ ] Cleanup
+- [ ] **Deploying a Kubernetes Cluster**
+  - [ ] Installing Kubernetes on a Public Cloud Provider
+    - [ ] Google Kubernetes Engine
+    - [ ] Installing Kubernetes with Azure Kubernetes Service
+    - [ ] Installing Kubernetes on Amazon Web Services
+  - [ ] Installing Kubernetes Locally Using minikube
+  - [ ] Running Kubernetes in Docker
+  - [ ] Running Kubernetes on Raspberry Pi
+  - [ ] The Kubernetes Client
+    - [ ] Checking Cluster Status
+    - [ ] Listing Kubernetes Worker Nodes
+  - [ ] Cluster Components
+    - [ ] Kubernetes Proxy
+    - [ ] Kubernetes DNS
+    - [ ] Kubernetes UI
+- [ ] **Common kubectl Commands**
+  - [ ] Namespaces
+  - [ ] Contexts
+  - [ ] Viewing Kubernetes API Objects
+  - [ ] Creating, Updating, and Destroying Kubernetes Objects
+  - [ ] Labeling and Annotating Objects
+  - [ ] Debugging Commands
+  - [ ] Command Autocompletion
+  - [ ] Alternative Ways of Viewing Your Cluster
+- [ ] **Pods**
+  - [ ] Pods in Kubernetes
+  - [ ] Thinking with Pods
+  - [ ] The Pod Manifest
+    - [ ] Creating a Pod
+    - [ ] Creating a Pod Manifest
+  - [ ] Running Pods
+    - [ ] Listing Pods
+    - [ ] Pod Details
+    - [ ] Deleting a Pod
+  - [ ] Accessing Your Pod
+    - [ ] Using Port Forwarding
+    - [ ] Getting More Info with Logs
+    - [ ] Running Commands in Your Container with exec
+    - [ ] Copying Files to and from Containers
+  - [ ] Health Checks
+    - [ ] Liveness Probe
+    - [ ] Readiness Probe
+    - [ ] Types of Health Checks
+  - [ ] Resource Management
+    - [ ] Resource Requests: Minimum Required Resources
+    - [ ] Capping Resource Usage with Limits
+  - [ ] Persisting Data with Volumes
+    - [ ] Using Volumes with Pods
+    - [ ] Different Ways of Using Volumes with Pods
+    - [ ] Persisting Data Using Remote Disks
+  - [ ] Putting It All Together
+- [ ] **Labels and Annotations**
+  - [ ] Labels
+    - [ ] Applying Labels
+    - [ ] Modifying Labels
+    - [ ] Label Selectors
+    - [ ] Label Selectors in API Objects
+    - [ ] Labels in the Kubernetes Architecture
+  - [ ] Annotations
+    - [ ] Defining Annotations
+  - [ ] Cleanup
+- [ ] **Service Discovery**
+  - [ ] What Is Service Discovery?
+  - [ ] The Service Object
+    - [ ] Service DNS
+    - [ ] Readiness Checks
+  - [ ] Looking Beyond the Cluster
+  - [ ] Cloud Integration
+  - [ ] Advanced Details
+    - [ ] Endpoints
+    - [ ] Manual Service Discovery
+    - [ ] kube-proxy and Cluster IPs
+    - [ ] Cluster IP Environment Variables
+  - [ ] Connecting with Other Environments
+  - [ ] Cleanup
+- [ ] **HTTP Load Balancing with Ingress**
+  - [ ] Ingress Spec Versus Ingress Controllers
+  - [ ] Installing Contour
+    - [ ] Configuring DNS
+    - [ ] Configuring a Local hosts File
+  - [ ] Using Ingress
+    - [ ] Simplest Usage
+    - [ ] Using Hostnames
+    - [ ] Using Paths
+    - [ ] Cleaning Up
+  - [ ] Advanced Ingress Topics and Gotchas
+    - [ ] Running Multiple Ingress Controllers
+    - [ ] Multiple Ingress Objects
+    - [ ] Ingress and Namespaces
+    - [ ] Path Rewriting
+    - [ ] Serving TLS
+  - [ ] Alternate Ingress Implementations
+  - [ ] The Future of Ingress
+- [ ] **ReplicaSets**
+  - [ ] Reconciliation Loops
+  - [ ] Relating Pods and ReplicaSets
+    - [ ] Adopting Existing Containers
+    - [ ] Quarantining Containers
+  - [ ] Designing with ReplicaSets
+  - [ ] ReplicaSet Spec
+    - [ ] Pod Templates
+    - [ ] Labels
+  - [ ] Creating a ReplicaSet
+  - [ ] Inspecting a ReplicaSet
+    - [ ] Finding a ReplicaSet from a Pod
+    - [ ] Finding a Set of Pods for a ReplicaSet
+  - [ ] Scaling ReplicaSets
+    - [ ] Imperative Scaling with kubectl scale
+    - [ ] Declaratively Scaling with kubectl apply
+    - [ ] Autoscaling a ReplicaSet
+  - [ ] Deleting ReplicaSets
+- [ ] **Deployments**
+  - [ ] Your First Deployment
+    - [ ] Deployment Internals
+  - [ ] Creating Deployments
+  - [ ] Managing Deployments
+  - [ ] Updating Deployments
+    - [ ] Scaling a Deployment
+    - [ ] Updating a Container Image
+    - [ ] Rollout History
+  - [ ] Deployment Strategies
+    - [ ] Recreate Strategy
+    - [ ] RollingUpdate Strategy
+    - [ ] Slowing Rollouts to Ensure Service Health
+  - [ ] Deleting a Deployment
+  - [ ] Monitoring a Deployment
+- [ ] **DaemonSets**
+  - [ ] DaemonSet Scheduler
+  - [ ] Creating DaemonSets
+  - [ ] Limiting DaemonSets to Specific Nodes
+    - [ ] Adding Labels to Nodes
+    - [ ] Node Selectors
+  - [ ] Updating a DaemonSet
+    - [ ] Rolling Update of a DaemonSet
+  - [ ] Deleting a DaemonSet
+- [ ] **Jobs**
+  - [ ] The Job Object
+  - [ ] Job Patterns
+    - [ ] One Shot
+    - [ ] Parallelism
+    - [ ] Work Queues
+  - [ ] CronJobs
+- [ ] **ConfigMaps and Secrets**
+  - [ ] ConfigMaps
+    - [ ] Creating ConfigMaps
+    - [ ] Using a ConfigMap
+  - [ ] Secrets
+    - [ ] Creating Secrets
+    - [ ] Consuming Secrets
+    - [ ] Private Docker Registries
+  - [ ] Naming Constraints
+  - [ ] Managing ConfigMaps and Secrets
+    - [ ] Listing
+    - [ ] Creating
+    - [ ] Updating
+- [ ] **Role-Based Access Control for Kubernetes**
+  - [ ] Role-Based Access Control
+    - [ ] Identity in Kubernetes
+    - [ ] Understanding Roles and Role Bindings
+    - [ ] Roles and Role Bindings in Kubernetes
+  - [ ] Techniques for Managing RBAC
+    - [ ] Testing Authorization with can-i
+    - [ ] Managing RBAC in Source Control
+  - [ ] Advanced Topics
+    - [ ] Aggregating ClusterRoles
+    - [ ] Using Groups for Bindings
+- [ ] **Integrating Storage Solutions and Kubernetes**
+  - [ ] Importing External Services
+    - [ ] Services Without Selectors
+    - [ ] Limitations of External Services: Health Checking
+  - [ ] Running Reliable Singletons
+    - [ ] Running a MySQL Singleton
+    - [ ] Dynamic Volume Provisioning
+  - [ ] Kubernetes-Native Storage with StatefulSets
+    - [ ] Properties of StatefulSets
+    - [ ] Manually Replicated MongoDB with StatefulSets
+    - [ ] Automating MongoDB Cluster Creation
+    - [ ] Persistent Volumes and StatefulSets
+    - [ ] One Final Thing: Readiness Probes
+- [ ] **Extending Kubernetes**
+  - [ ] What It Means to Extend Kubernetes
+  - [ ] Points of Extensibility
+  - [ ] Patterns for Custom Resources
+    - [ ] Just Data
+    - [ ] Compilers
+    - [ ] Operators
+    - [ ] Getting Started
+- [ ] **Deploying Real-World Applications**
+  - [ ] Jupyter
+  - [ ] Parse
+    - [ ] Prerequisites
+    - [ ] Building the parse-server
+    - [ ] Deploying the parse-server
+    - [ ] Testing Parse
+  - [ ] Ghost
+    - [ ] Configuring Ghost
+  - [ ] Redis
+    - [ ] Configuring Redis
+    - [ ] Creating a Redis Service
+    - [ ] Deploying Redis
+    - [ ] Playing with Our Redis Cluster
+- [ ] **Organizing Your Application**
+  - [ ] Principles to Guide Us
+    - [ ] Filesystems as the Source of Truth
+    - [ ] The Role of Code Review
+    - [ ] Feature Gates and Guards
+  - [ ] Managing Your Application in Source Control
+    - [ ] Filesystem Layout
+    - [ ] Managing Periodic Versions
+  - [ ] Structuring Your Application for Development, Testing, and Deployment
+    - [ ] Goals
+    - [ ] Progression of a Release
+  - [ ] Parameterizing Your Application with Templates
+    - [ ] Parameterizing with Helm and Templates
+    - [ ] Filesystem Layout for Parameterization
+  - [ ] Deploying Your Application Around the World
+    - [ ] Architectures for Worldwide Deployment
+    - [ ] Implementing Worldwide Deployment
+    - [ ] Dashboards and Monitoring for Worldwide Deployments
