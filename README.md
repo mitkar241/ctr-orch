@@ -2,6 +2,10 @@
 ---
 Repo for Container Orchestration related Projects and Files.
 
+### Redirections
+---
+- [mitkar241/kubernetes](https://github.com/mitkar241/kubernetes)
+
 ### Reading Material
 ---
 - [ ] [What is the exact difference between Docker EE (Enterprise Edition), Docker CE (Community Edition) and Docker (Custom Support)](https://stackoverflow.com/questions/45018786/what-is-the-exact-difference-between-docker-ee-enterprise-edition-docker-ce)
