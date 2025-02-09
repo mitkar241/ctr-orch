@@ -1,0 +1,12 @@
+global:
+  redis:
+    password: password
+replica:
+  replicaCount: 3
+  automountServiceAccountToken: true
+sentinel:
+  enabled: true
+  service:
+    createMaster: true
+rbac:
+  create: true

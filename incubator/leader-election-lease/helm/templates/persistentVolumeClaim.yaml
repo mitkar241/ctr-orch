@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-storage-my-app-0
+  namespace: default
+  labels:
+    app: my-app
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: local-path
+  volumeMode: Filesystem
+  volumeName: shared-storage-pv-0  # 🔹 Bind to the PV above
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-storage-my-app-1
+  namespace: default
+  labels:
+    app: my-app
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: local-path
+  volumeMode: Filesystem
+  volumeName: shared-storage-pv-1  # 🔹 Bind to the PV above
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-storage-my-app-2
+  namespace: default
+  labels:
+    app: my-app
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: local-path
+  volumeMode: Filesystem
+  volumeName: shared-storage-pv-2  # 🔹 Bind to the PV above

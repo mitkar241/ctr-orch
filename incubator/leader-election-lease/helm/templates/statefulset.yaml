@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  serviceName: "my-app"
+  selector:
+    matchLabels:
+      app: my-app
+  volumeClaimTemplates:
+    - metadata:
+        name: shared-storage
+      spec:
+        accessModes: ["ReadWriteMany"]
+        resources:
+          requests:
+            storage: 100Mi
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      serviceAccountName: leader-election-sa
+      volumes:
+        - name: script-volume
+          configMap:
+            name: leader-election-scripts
+            defaultMode: 0777  # Make scripts executable
+      # 🟢 InitContainer to Fix Permissions Before App Starts
+      initContainers:
+        - name: init-permissions
+          image: busybox
+          command: ["sh", "-c", "mkdir -p /shared && touch /shared/leader.txt && chmod 777 /shared/leader.txt && touch /shared/leader.log && chmod 777 /shared/leader.log"]
+          volumeMounts:
+            - name: shared-storage
+              mountPath: /shared
+      containers:
+      # 🟢 Main C++ Application
+      - name: app
+        image: my-cpp-app:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+        volumeMounts:
+          - name: shared-storage
+            mountPath: /shared
+
+      # 🟡 Kubectl Sidecar (Runs the script)
+      - name: kctl
+        image: bitnami/kubectl:latest
+        command: ["/bin/sh", "-c", "/shared/update_leader.sh"]
+        #command: ["/bin/sh", "-c", "sleep infinity"]
+        volumeMounts:
+          - name: shared-storage
+            mountPath: /shared
+          - name: script-volume
+            mountPath: /shared/update_leader.sh
+            subPath: update_leader.sh

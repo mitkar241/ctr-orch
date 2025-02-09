@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: client-script
+  namespace: default
+data:
+  client-increment.sh: |
+    #!/bin/bash
+    
+    export REDISCLI_AUTH=password
+    
+    get_master() {
+        CURRENT_PRIMARY=$(redis-cli -h redis -p 26379 SENTINEL get-master-addr-by-name mymaster)
+        echo "[$(date)] primary: ${CURRENT_PRIMARY}"
+    	
+    	#CURRENT_PRIMARY_HOST=$(echo $CURRENT_PRIMARY | cut -d' ' -f1 | head -n 1)
+    	#CURRENT_PRIMARY_HOST="redis"
+    	CURRENT_PRIMARY_HOST="redis-master"
+    	echo "[$(date)] host: ${CURRENT_PRIMARY_HOST}"
+    }
+    
+    while true
+    do
+    	#get_master
+    	CURRENT_PRIMARY_HOST="redis-master"
+    	INCR_OUTPUT=$(redis-cli -h ${CURRENT_PRIMARY_HOST} -p 6379 INCR mycounter)
+    	if [[ ${INCR_OUTPUT} == "Error: Server closed the connection" ]]; then
+    	  echo "[$(date)] host: ${CURRENT_PRIMARY_HOST}; result: ${INCR_OUTPUT}"
+    	  #get_master
+    	fi
+    	echo "[$(date)] host: ${CURRENT_PRIMARY_HOST}; result: ${INCR_OUTPUT}"
+        sleep 1
+    done

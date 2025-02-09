@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: leader-election-scripts
+  namespace: default
+data:
+  update_leader.sh: |
+    #!/bin/bash
+    set -e
+    
+    NAMESPACE="default"
+    LEASE_NAME="leader-election"
+    HOSTNAME=$(hostname)
+    SLEEP_INTERVAL=1  # How often to check the lease
+    RANDOM_SLEEP=$(($RANDOM % 5 + 1))  # Random sleep (1-5s) to reduce contention
+    
+    get_current_state() {
+        # Fetch lease details
+        LEASE_INFO=$(kubectl get lease "$LEASE_NAME" -n "$NAMESPACE" -o=json 2>/dev/null)
+    
+        CURRENT_LEADER=$(echo "$LEASE_INFO" | jq -r '.spec.holderIdentity')
+        RENEW_TIME=$(echo "$LEASE_INFO" | jq -r '.spec.renewTime')
+        LEASE_DURATION=$(echo "$LEASE_INFO" | jq -r '.spec.leaseDurationSeconds')
+    
+        # Get current time in RFC3339Nano format
+        CURRENT_TIME=$(date -u "+%Y-%m-%dT%H:%M:%S.%6NZ")
+    
+        # Convert times to Unix timestamps for comparison
+        CURRENT_TIMESTAMP=$(date -d "$CURRENT_TIME" +%s)
+        RENEW_TIMESTAMP=$(date -d "$RENEW_TIME" +%s 2>/dev/null || echo 0)
+    
+        LEASE_EXPIRY=$((RENEW_TIMESTAMP + LEASE_DURATION))
+
+        DIFF=$((CURRENT_TIMESTAMP - LEASE_EXPIRY))
+    }
+    
+    while true; do
+    
+        get_current_state
+    
+        if [[ -z "$CURRENT_LEADER" || "$DIFF" -gt 3+1 ]]; then
+            echo "[$(date +%T)][${HOSTNAME}] attempting lease: leader: $CURRENT_LEADER, diff: ${DIFF}" >> /shared/leader.log
+            
+            kubectl patch lease "$LEASE_NAME" -n "$NAMESPACE" --type='merge' --field-manager="$HOSTNAME" -p \
+            "{\"spec\": {\"holderIdentity\": \"$HOSTNAME\", \"renewTime\": \"$CURRENT_TIME\"}}"
+    
+            sleep 1
+            # **Verify leader update**
+            CURRENT_LEADER=$(kubectl get lease "$LEASE_NAME" -n "$NAMESPACE" -o=jsonpath='{.spec.holderIdentity}')
+            
+            if [[ "$CURRENT_LEADER" == "$HOSTNAME" ]]; then
+                echo "[$(date +%T)][${HOSTNAME}] acquired lease: diff: ${DIFF}" >> /shared/leader.log
+                # Write current leader to shared file
+                echo "${CURRENT_LEADER}" > /shared/leader.txt
+            else
+                echo "[$(date +%T)][${HOSTNAME}] Lost race condition: leader: $CURRENT_LEADER, sleep: $RANDOM_SLEEP" >> /shared/leader.log
+                # Introduce random sleep to avoid simultaneous updates
+                #sleep "$RANDOM_SLEEP"
+            fi
+    
+        elif [[ "$CURRENT_LEADER" == "$HOSTNAME" ]]; then
+            echo "[$(date +%T)][${HOSTNAME}] renewing lease: diff: ${DIFF}" >> /shared/leader.log
+            kubectl patch lease "$LEASE_NAME" -n "$NAMESPACE" --type='merge' --field-manager="$HOSTNAME" -p \
+            "{\"spec\": {\"renewTime\": \"$CURRENT_TIME\"}}"
+        
+        #else
+            #echo "[$(date +%T)][${HOSTNAME}] lease still active: leader: $CURRENT_LEADER" >> /shared/leader.log
+            #sleep "$RANDOM_SLEEP"
+        fi
+    
+        # Write current leader to shared file
+        #echo "${CURRENT_LEADER}" > /shared/leader.txt
+    
+        sleep "$SLEEP_INTERVAL"
+    done

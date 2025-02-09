@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-client
+  labels:
+    app: redis-client
+spec:
+  restartPolicy: Never
+  containers:
+    - name: redis-client
+      image: redis
+      command: ["/bin/sh", "-c", "sleep infinity"]
+      volumeMounts:
+        - name: script-volume
+          mountPath: /data/
+  volumes:
+    - name: script-volume
+      configMap:
+        name: client-script
+        defaultMode: 0777  # Make the script executable
