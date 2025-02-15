@@ -1,0 +1,7 @@
+controller:
+  replicaCount: 1
+  service:
+    type: LoadBalancer
+  ingressClass: nginx
+  admissionWebhooks:
+    enabled: false
