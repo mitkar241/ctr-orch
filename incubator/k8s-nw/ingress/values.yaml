@@ -1,0 +1,9 @@
+controller:
+  replicaCount: 1
+  service:
+    type: LoadBalancer
+    nodePorts:
+      http: 30080
+  ingressClass: nginx
+  admissionWebhooks:
+    enabled: false
