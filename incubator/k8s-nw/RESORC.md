@@ -1,6 +1,21 @@
 # Resource
 ---
 
+## Youtube Playlist
+---
+- [ ] https://www.youtube.com/playlist?list=PLSAko72nKb8QWsfPpBlsw-kOdMBD7sra-
+- [ ] https://www.youtube.com/watch?v=920BZXvQpVs
+- [ ] https://www.youtube.com/watch?v=CYnwBIpvSlM
+- [ ] https://www.youtube.com/watch?v=8fes5sP0rs0
+- [ ] https://www.youtube.com/watch?v=pdYYXKUFnrU
+- [ ] https://www.youtube.com/watch?v=y2bhV81MfKQ
+- [ ] https://www.youtube.com/watch?v=GgCA2USI5iQ
+- [ ] https://www.youtube.com/watch?v=H5Zl_kDOwBU
+- [ ] https://www.youtube.com/watch?v=Mj04QOqAaJ8
+- [ ] https://www.youtube.com/watch?v=6v_BDHIgOY8
+- [ ] https://www.youtube.com/watch?v=tq9ng_Nz9j8
+- [ ] https://www.youtube.com/watch?v=cUGXu2tiZMc
+
 ## Books
 ---
 
@@ -131,6 +146,14 @@ Here are some of the **best books on Kubernetes networking** that cover in-depth
 
 | Title                                                                                                      | Author(s)                   | Description                                                                                                                                                                                                                   | Link                                                                                      |
 |------------------------------------------------------------------------------------------------------------|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| **What namespaces are shared among containers in a Kubernetes pod?**                                                                                        | stackoverflow.com        |                                                                                                          | [Read Here](https://stackoverflow.com/questions/51765555/what-namespaces-are-shared-among-containers-in-a-kubernetes-pod)                                                 |
+| **Multi-Container Pods in Kubernetes**                                                                                        | Paul Linchpiner        |                                                                                                          | [Read Here](https://linchpiner.github.io/k8s-multi-container-pods.html)                                                 |
+| **Architecture-K3s**                                                                                        | K3s        |                                                                                                          | [Read Here](https://docs.k3s.io/architecture)                                                 |
+| **Learning Kubernetes VXLAN Network with Flannel**                                                                                        | Addo Zhang        |                                                                                                          | [Read Here](https://addozhang.medium.com/learning-kubernetes-vxlan-network-with-flannel-2d6a58c95300)                                                 |
+| **Tracing packets datapath in Kubernetes network**                                                                                        | Addo Zhang        |                                                                                                          | [Read Here](https://addozhang.medium.com/tracing-network-packets-in-kubernetes-1f8928d9951f)                                                 |
+| **Understanding kubernetes networking: pods**                                                                                        | Mark Betz        |                                                                                                          | [Read Here](https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727)                                                 |
+| **Understanding kubernetes networking: services**                                                                                        | Mark Betz        |                                                                                                          | [Read Here](https://medium.com/google-cloud/understanding-kubernetes-networking-services-f0cb48e4cc82)                                                 |
+| **Understanding kubernetes networking: ingress**                                                                                        | Mark Betz        |                                                                                                          | [Read Here](https://medium.com/google-cloud/understanding-kubernetes-networking-ingress-1bc341c84078)                                                 |
 | **Kubernetes Blog**                                                                                        | Kubernetes Community        | The official Kubernetes blog featuring articles on various topics, including networking, updates, and best practices.                                                                                                         | [Read Here](https://kubernetes.io/blog/)                                                 |
 | **Understanding Kubernetes Networking: Pods**                                                              | Mark Betz                   | An insightful article that breaks down the fundamentals of pod networking within Kubernetes, making complex concepts accessible.                                                                                             | [Read Here](https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727) |
 | **The Learnk8s Blog**                                                                                      | Learnk8s Team               | In-depth technical articles focusing on mastering Kubernetes fundamentals, with a strong emphasis on networking concepts and visual explanations.                                                                            | [Read Here](https://learnk8s.io/blog)                                                    |
@@ -149,6 +172,7 @@ Here are some of the **best books on Kubernetes networking** that cover in-depth
 
 | **Title**                                                                                      | **Description**                                                                                     | **Link** |
 |----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|----------|
+| **Share Process Namespace between Containers in a Pod**                                                            |          | [Read Here](https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/) |
 | **Kubernetes Networking Concepts**                                                            | Official Kubernetes documentation explaining networking basics, services, and policies.         | [Read Here](https://kubernetes.io/docs/concepts/cluster-administration/networking/) |
 | **Kubernetes Services, Load Balancing, and Networking**                                       | Detailed documentation on how Kubernetes handles network access and communication.              | [Read Here](https://kubernetes.io/docs/concepts/services-networking/) |
 | **Container Network Interface (CNI) Specification**                                          | Official CNI documentation detailing how plugins manage networking in Kubernetes.               | [Read Here](https://github.com/containernetworking/cni/blob/main/SPEC.md) |
