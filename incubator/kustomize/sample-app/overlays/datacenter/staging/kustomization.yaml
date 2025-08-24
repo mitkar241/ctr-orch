@@ -1,0 +1,9 @@
+resources:
+  - ../../../resources
+  - mysql-deployment.yaml
+
+labels:
+- includeSelectors: true
+  pairs:
+    environment: staging
+

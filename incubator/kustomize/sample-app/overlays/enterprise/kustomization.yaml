@@ -1,0 +1,7 @@
+resources:
+  - ../../resources
+
+components:
+  - ../../components/auth
+  - ../../components/db
+  - ../../components/caching

@@ -1,0 +1,6 @@
+resources:
+  - ../../resources
+
+components:
+  - ../../components/auth
+  - ../../components/logging

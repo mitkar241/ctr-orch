@@ -1,0 +1,6 @@
+resources:
+  - ../../../resources
+
+patches:
+  - path: patches/api.yaml
+

@@ -1,0 +1,6 @@
+resources:
+  - ../../../resources
+  - redis-deployment.yaml
+
+patches:
+  - path: patches/api.yaml

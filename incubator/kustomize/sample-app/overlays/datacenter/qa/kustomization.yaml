@@ -1,0 +1,16 @@
+resources:
+  - ../../../resources
+
+labels:
+- includeSelectors: true
+  pairs:
+    environment: QA
+
+patches:
+- target:
+    kind: Deployment
+    name: api-deployment
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: caddy
